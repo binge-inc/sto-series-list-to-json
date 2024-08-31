@@ -8,9 +8,9 @@ public class CategoriesToJSON {
     public static String categoriesToJSON(final Category[] categories, final boolean formatted) {
         Gson gson;
         if (formatted) {
-            gson = new Gson(); // unformatted, roughly 600kb
-        } else {
             gson = new GsonBuilder().setPrettyPrinting().create(); // formatted, roughly 1mb
+        } else {
+            gson = new Gson(); // unformatted, roughly 600kb
         }
         return gson.toJson(categories);
     }
