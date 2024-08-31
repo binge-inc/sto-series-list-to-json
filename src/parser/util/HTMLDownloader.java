@@ -8,25 +8,33 @@ import java.util.regex.*;
 
 public class HTMLDownloader {
     public static String getHTML(final String fullUrl) {
-        URL url = null;
+        URL url;
+        System.out.println("HTMLDownloader.getHTML(String): Checking url...");
         try {
             url = new URL(fullUrl);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        URLConnection con = null;
+        System.out.println("HTMLDownloader.getHTML(String): Connecting...");
+        URLConnection con;
         try {
             con = url.openConnection();
         } catch (final IOException e) {
             throw new RuntimeException(e);
         }
         Pattern p = Pattern.compile("text/html;\\s+charset=([^\\s]+)\\s*");
+        if (con.getContentType() == null) {
+            System.err.println("Something went wrong. We probably got a 403 or some other non-good server response.");
+            return null;
+        }
+        System.out.println("HTMLDownloader.getHTML(String): Matching charset...");
         Matcher m = p.matcher(con.getContentType());
         String charset = m.matches() ? m.group(1) : "ISO-8859-1";
         String str;
+        System.out.println("HTMLDownloader.getHTML(String): Downloading HTML...");
         try {
             str = IOUtils.toString(con.getInputStream(), charset);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException(e);
         }
         return str;

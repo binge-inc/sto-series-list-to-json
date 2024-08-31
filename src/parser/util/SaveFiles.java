@@ -27,5 +27,6 @@ public class SaveFiles {
         } catch (final IOException e) {
             e.printStackTrace();
         }
+        System.out.println("SaveFiles.saveSeriesListJSON(String, boolean): File " + fileName + " saved");
     }
 }

@@ -21,31 +21,26 @@ public class SeriesListParser {
     }
 
     /**
-     * ToDo
+     * Takes an ArrayList<String> containing the raw html of all series, with 1 category per element.
+     * The parsed data is stored into the specified Category array.
+     * The array parsedCategories must be initialized and must have the same size as
      *
      * @param categories raw data
      * @param parsedCategories array to store to
-     * @return
      */
-    public static boolean parseCategoryList(final ArrayList<String> categories, final Category[] parsedCategories) {
+    public static void parseCategoryList(final ArrayList<String> categories, final Category[] parsedCategories) {
+        System.out.println("SeriesListParser.parseCategoryList(ArrayList<String>, Category[]): Parsing categories...");
         if (categories.size() == parsedCategories.length) {
             for (int i = 0; i < categories.size(); i++) {
                 parsedCategories[i] = new Category(SeriesListParser.getCategoryName(categories.get(i)));
             }
             for (int i = 0; i < categories.size(); i++) {
+                System.out.println("SeriesListParser.parseCategoryList(ArrayList<String>, Category[]): " + (i + 1) + "/" + categories.size() + ": " + parsedCategories[i].getName());
                 parse(categories.get(i), parsedCategories[i]);
             }
-            return true;
         } else {
             System.err.println("categories.size() does not match parsedCategories.length [" + categories.size() + " != " + parsedCategories.length + "].");
-            return false;
         }
-    }
-
-    public static boolean parseCategoryList(final int index, final String category, final Category[] parsedCategories) {
-        parsedCategories[index] = new Category(SeriesListParser.getCategoryName(category));
-        parse(category, parsedCategories[index]);
-        return true;
     }
 
     /**
@@ -53,9 +48,8 @@ public class SeriesListParser {
      *
      * @param input raw data
      * @param parsedCategory Category object to store to
-     * @return
      */
-    public static boolean parse(final String input, final Category parsedCategory) {
+    public static void parse(final String input, final Category parsedCategory) {
         final String urlBeginPattern = "href=\"";
         final String urlEndPattern = "\" ";
         final String nameBeginPattern = "\">";
@@ -73,6 +67,5 @@ public class SeriesListParser {
             name = s.substring(s.indexOf(nameBeginPattern) + nameBeginPattern.length(), s.indexOf(nameEndPattern));
             parsedCategory.addSeries(new Series(name, url));
         }
-        return true;
     }
 }
