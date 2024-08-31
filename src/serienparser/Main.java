@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(final String[] args) {
         String url = "http://186.2.175.5/serien";
-        String fileLocation = "./temp/serien.html";
+        String fileLocation = "./temp/series.html";
 
         String html = HTMLDownloader.getHTML(url);
         System.out.println("Full HTML contains " + html.length() + " characters.");
@@ -32,6 +32,6 @@ public class Main {
         SaveFiles.saveSeriesListJSON(jsonRaw, false);
         String jsonFormatted = CategoriesToJSON.categoriesToJSON(parsedCategories, true);
         SaveFiles.saveSeriesListJSON(jsonFormatted, true);
-        System.out.println("ok");
+        TempClear.clear();
     }
 }
