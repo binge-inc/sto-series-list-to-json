@@ -7,11 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class SaveFiles {
-    public static void saveSeriesListJSON(final String json, final boolean formatted, final boolean categorized) {
-        File resultDir = new File("./result/");
+    public static void saveSeriesListJSON(final String dirPath, final String json, final boolean formatted, final boolean categorized) {
+        File resultDir = new File(dirPath);
         if (!resultDir.exists()) {
             try {
-                Files.createDirectory(Paths.get("./result/"));
+                Files.createDirectory(Paths.get(dirPath));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -19,15 +19,15 @@ public class SaveFiles {
         String fileName;
         if (formatted) {
             if (categorized) {
-                fileName = "./result/series_nice_categorized.json";
+                fileName = dirPath + "series_nice_categorized.json";
             } else {
-                fileName = "./result/series_nice.json";
+                fileName = dirPath + "series_nice.json";
             }
         } else {
             if (categorized) {
-                fileName = "./result/series_categorized.json";
+                fileName = dirPath + "series_categorized.json";
             } else {
-                fileName = "./result/series.json";
+                fileName = dirPath + "series.json";
             }
         }
         try (final FileWriter writer = new FileWriter(fileName)) {
