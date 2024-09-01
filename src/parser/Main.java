@@ -19,14 +19,15 @@ public class Main {
         Category[] parsedCategories = new Category[categories.size()]; // categorized
         SeriesListParser.parseCategoryList(categories, parsedCategories);
         String jsonRawCategorized = ConvertToJSON.categoriesToJSON(parsedCategories, false);
-        SaveFiles.saveSeriesListJSON(jsonRawCategorized, false, true);
+        String directory = "./result/";
+        SaveFiles.saveSeriesListJSON(directory, jsonRawCategorized, false, true);
         String jsonFormattedCategorized = ConvertToJSON.categoriesToJSON(parsedCategories, true);
-        SaveFiles.saveSeriesListJSON(jsonFormattedCategorized, true, true);
+        SaveFiles.saveSeriesListJSON(directory, jsonFormattedCategorized, true, true);
         ArrayList<Series> series = Repack.packSeriesArrayFromCategoryArray(parsedCategories);
         Series[] seriesArray = SeriesListToArray.convert(series); // uncategorized
         String jsonRaw = ConvertToJSON.categoriesToJSON(seriesArray, false);
-        SaveFiles.saveSeriesListJSON(jsonRaw, false, false);
+        SaveFiles.saveSeriesListJSON(directory, jsonRaw, false, false);
         String jsonFormatted = ConvertToJSON.categoriesToJSON(seriesArray, true);
-        SaveFiles.saveSeriesListJSON(jsonFormatted, true, false);
+        SaveFiles.saveSeriesListJSON(directory, jsonFormatted, true, false);
     }
 }
