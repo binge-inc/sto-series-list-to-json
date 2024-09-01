@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class SaveFiles {
-    public static void saveSeriesListJSON(final String json, final boolean formatted) {
+    public static void saveSeriesListJSON(final String json, final boolean formatted, final boolean categorized) {
         File resultDir = new File("./result/");
         if (!resultDir.exists()) {
             try {
@@ -18,9 +18,17 @@ public class SaveFiles {
         }
         String fileName;
         if (formatted) {
-            fileName = "./result/series_nice.json";
+            if (categorized) {
+                fileName = "./result/series_nice_categorized.json";
+            } else {
+                fileName = "./result/series_nice.json";
+            }
         } else {
-            fileName = "./result/series.json";
+            if (categorized) {
+                fileName = "./result/series_categorized.json";
+            } else {
+                fileName = "./result/series.json";
+            }
         }
         try (final FileWriter writer = new FileWriter(fileName)) {
             writer.write(json);

@@ -1,6 +1,6 @@
 package parser.model;
 
-public class Series {
+public class Series implements Comparable {
     private String name;
     private String url;
 
@@ -28,5 +28,10 @@ public class Series {
 
     public void setUrl(final String url) {
         this.url = url;
+    }
+
+    @Override
+    public int compareTo(final Object o) {
+        return name.compareTo(((Series) o).getName());
     }
 }

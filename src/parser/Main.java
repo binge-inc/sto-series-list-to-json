@@ -1,6 +1,6 @@
 package parser;
 
-import parser.model.Category;
+import parser.model.*;
 import parser.util.*;
 
 import java.util.ArrayList;
@@ -16,11 +16,17 @@ public class Main {
         }
         String importantHtml = SeriesListCutter.cutUnimportantStuff(html);
         ArrayList<String> categories = SeriesListCutter.getCategories(importantHtml);
-        Category[] parsedCategories = new Category[categories.size()];
+        Category[] parsedCategories = new Category[categories.size()]; // categorized
         SeriesListParser.parseCategoryList(categories, parsedCategories);
-        String jsonRaw = CategoriesToJSON.categoriesToJSON(parsedCategories, false);
-        SaveFiles.saveSeriesListJSON(jsonRaw, false);
-        String jsonFormatted = CategoriesToJSON.categoriesToJSON(parsedCategories, true);
-        SaveFiles.saveSeriesListJSON(jsonFormatted, true);
+        String jsonRawCategorized = ConvertToJSON.categoriesToJSON(parsedCategories, false);
+        SaveFiles.saveSeriesListJSON(jsonRawCategorized, false, true);
+        String jsonFormattedCategorized = ConvertToJSON.categoriesToJSON(parsedCategories, true);
+        SaveFiles.saveSeriesListJSON(jsonFormattedCategorized, true, true);
+        ArrayList<Series> series = Repack.packSeriesArrayFromCategoryArray(parsedCategories);
+        Series[] seriesArray = SeriesListToArray.convert(series); // uncategorized
+        String jsonRaw = ConvertToJSON.categoriesToJSON(seriesArray, false);
+        SaveFiles.saveSeriesListJSON(jsonRaw, false, false);
+        String jsonFormatted = ConvertToJSON.categoriesToJSON(seriesArray, true);
+        SaveFiles.saveSeriesListJSON(jsonFormatted, true, false);
     }
 }

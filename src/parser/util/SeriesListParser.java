@@ -65,6 +65,9 @@ public class SeriesListParser {
             s = splitted.get(i);
             url = s.substring(s.indexOf(urlBeginPattern) + urlBeginPattern.length(), s.indexOf(urlEndPattern));
             name = s.substring(s.indexOf(nameBeginPattern) + nameBeginPattern.length(), s.indexOf(nameEndPattern));
+            while (name.startsWith(" ")) {
+                name = name.substring(1);
+            }
             parsedCategory.addSeries(new Series(name, url));
         }
     }
