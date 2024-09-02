@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(final String[] args) {
         String url = "http://186.2.175.5/serien";
-        String html = HTMLDownloader.getHTML(url);
+        String html = HTMLDownloader.getHTML(url, true);
         if (html == null) {
             System.err.println("Main.main(String[]): html is null");
             System.err.println("Main.main(String[]): Aborting...");
