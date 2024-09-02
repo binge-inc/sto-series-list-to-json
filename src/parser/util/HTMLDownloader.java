@@ -7,15 +7,15 @@ import java.net.*;
 import java.util.regex.*;
 
 public class HTMLDownloader {
-    public static String getHTML(final String fullUrl) {
+    public static String getHTML(final String fullUrl, final boolean debug) {
         URL url;
-        System.out.println("HTMLDownloader.getHTML(String): Checking url...");
+        if (debug) System.out.println("HTMLDownloader.getHTML(String): Checking url " + fullUrl + "...");
         try {
             url = new URL(fullUrl);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("HTMLDownloader.getHTML(String): Connecting...");
+        if (debug) System.out.println("HTMLDownloader.getHTML(String): Connecting...");
         URLConnection con;
         try {
             con = url.openConnection();
@@ -27,11 +27,11 @@ public class HTMLDownloader {
             System.err.println("Something went wrong. We probably got a 403 or some other non-good server response.");
             return null;
         }
-        System.out.println("HTMLDownloader.getHTML(String): Matching charset...");
+        if (debug) System.out.println("HTMLDownloader.getHTML(String): Matching charset...");
         Matcher m = p.matcher(con.getContentType());
         String charset = m.matches() ? m.group(1) : "ISO-8859-1";
         String str;
-        System.out.println("HTMLDownloader.getHTML(String): Downloading HTML...");
+        if (debug) System.out.println("HTMLDownloader.getHTML(String): Downloading HTML...");
         try {
             str = IOUtils.toString(con.getInputStream(), charset);
         } catch (final IOException e) {
